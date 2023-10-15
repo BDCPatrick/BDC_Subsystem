@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "z:\\game_design\\unreal_projekte\\loh_thetavern\\plugins\\bdc_ui_library\\source\\bdc_ui_library\\private\\bdc_ui_functionlibrary.cpp",
+        "ProvidedModule": "",
+        "PCH": "z:\\ue_5.2_source\\engine\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "z:\\game_design\\unreal_projekte\\loh_thetavern\\plugins\\bdc_ui_library\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\bdc_ui_library\\definitions.bdc_ui_library.h",
+            "z:\\game_design\\unreal_projekte\\loh_thetavern\\plugins\\bdc_ui_library\\source\\bdc_ui_library\\public\\bdc_ui_functionlibrary.h",
+            "z:\\game_design\\unreal_projekte\\loh_thetavern\\plugins\\bdc_ui_library\\intermediate\\build\\win64\\unrealeditor\\inc\\bdc_ui_library\\uht\\bdc_ui_functionlibrary.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
