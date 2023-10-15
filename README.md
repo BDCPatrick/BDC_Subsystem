@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://github.com/BDCPatrick/BDC_Subsystem/blob/main/Resources/Icon128.png" alt="Project Icon">
+</p>
 # BDC_Subsystem
 
 This is my Subsystem, that is used in nearly every UMG, AI and HUD System of my Projects.
