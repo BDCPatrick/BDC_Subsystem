@@ -12,3 +12,6 @@ So make sure to activate those Plugins (if not natively activated or integrated 
 
 The Plugin comes with some of my UI Elements like Button Text, Slider..etc, a UI Focus handler and Interfaces for UMG and HUD Communication.
 It also exposes some C++ CommonUI Elements, like the Video Player, to Blueprint.
+
+
+The Plugin comes with a small, yet unfinished demonstration. 
