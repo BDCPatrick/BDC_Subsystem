@@ -1,7 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
-using System.IO;
 
 public class BDC_UI_Library : ModuleRules
 {
@@ -9,8 +8,11 @@ public class BDC_UI_Library : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicIncludePaths.AddRange(new string[] { Path.Combine(ModuleDirectory, "Public") });
-        PrivateIncludePaths.AddRange(new string[] { Path.Combine(ModuleDirectory, "Private") });
+		var combinedPathPub = ModuleDirectory + "/" + "Public";
+		var combinedPathPriv = ModuleDirectory + "/" + "Private";
+		
+        PublicIncludePaths.AddRange(new string[] { combinedPathPub });
+        PrivateIncludePaths.AddRange(new string[] { combinedPathPriv });
 
         PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore", "UMG", "CommonUI", "CommonInput", "GameplayTags", "EnhancedInput" });
     }

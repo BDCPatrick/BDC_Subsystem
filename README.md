@@ -15,4 +15,8 @@ It also exposes some C++ CommonUI Elements, like the Video Player, to Blueprint.
 
 
 The Plugin comes with a small, yet unfinished demonstration. 
+<<<<<<< HEAD
 It is a workaround and i can´t confirm full bug-freeness.. but can give you ideas to handle CommonUI.
+=======
+It is a workaround and i can´t confirm full bug-freeness.. but can give you ideas to handle CommonUI.
+>>>>>>> 958cc72c1b8885685a184a4f8f9f0b38c109536c
