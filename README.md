@@ -15,3 +15,4 @@ It also exposes some C++ CommonUI Elements, like the Video Player, to Blueprint.
 
 
 The Plugin comes with a small, yet unfinished demonstration. 
+It is a workaround and i can´t confirm full bug-freeness.. but can give you ideas to handle CommonUI.
