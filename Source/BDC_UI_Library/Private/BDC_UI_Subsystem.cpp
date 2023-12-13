@@ -3,9 +3,6 @@
 #include "BDC_UI_Subsystem.h"
 #include "BDC_ActivatableWidget.h"
 #include "Engine/GameViewportClient.h"
-#include "Slate/SceneViewport.h"
-#include <Kismet/KismetMathLibrary.h>
-#include <Blueprint/WidgetBlueprintLibrary.h>
 
 void UBDC_UI_Subsystem::Initialize(FSubsystemCollectionBase& Collection)
 {

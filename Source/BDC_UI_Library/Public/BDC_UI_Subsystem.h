@@ -3,7 +3,6 @@
 #include "BDC_UI_Interface.h"
 #include "Components/Widget.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include "CommonUI/Public/CommonUITypes.h"
 #include "BDC_UI_Subsystem.generated.h"
 
 class UCanvasPanelSlot;

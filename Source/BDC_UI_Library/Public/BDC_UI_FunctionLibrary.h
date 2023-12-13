@@ -4,18 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "InputMappingContext.h"
 #include "InputAction.h"
 #include "EnhancedActionKeyMapping.h"
 #include "Engine/DataTable.h"
-#include "CommonUI/Public/CommonUITypes.h"
 #include "CommonInputBaseTypes.h"
 #include "BDC_UI_Interface.h"
 #include "Components/Widget.h"
-#include "Components/PanelSlot.h"
-#include "Components/CanvasPanelSlot.h"
-#include "Components/OverlaySlot.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "BDC_UI_FunctionLibrary.generated.h"
 
 class UInputAction;

@@ -1,10 +1,16 @@
 #include "BDC_UI_FunctionLibrary.h"
 #include <Blueprint/WidgetBlueprintLibrary.h>
+#include "InputMappingContext.h"
+#include "Widgets/Layout/Anchors.h"
+
+#include "CommonUITypes.h"
+#include "Components/CanvasPanelSlot.h"
+#include "Components/OverlaySlot.h"
+#include "Kismet/KismetMathLibrary.h"
 
 void UBDC_UI_FunctionLibrary::GetKeyIcon(UObject* IconDataObject, FKey InputKey, UTexture2D*& KeyIcon)
 {
-	UCommonInputBaseControllerData* TargetLibrary{};
-	TargetLibrary = Cast<UCommonInputBaseControllerData>(TargetLibrary);
+	UCommonInputBaseControllerData* TargetLibrary = Cast<UCommonInputBaseControllerData>(IconDataObject);
 	if (!TargetLibrary)
 	{
 		KeyIcon = nullptr;
@@ -19,36 +25,36 @@ void UBDC_UI_FunctionLibrary::GetKeyIcon(UObject* IconDataObject, FKey InputKey,
 
 void UBDC_UI_FunctionLibrary::GetCommonKey(FDataTableRowHandle InputData, FText& KeyName, FKey& FoundKeyKeyboard, FKey& FoundKeyGamepad)
 {
-	const FString ContextString;
-	const UDataTable* InputDataTable = InputData.DataTable.Get();
-	const FName RowName = InputData.RowName;
-	const FCommonInputActionDataBase* RowData = InputDataTable->FindRow<FCommonInputActionDataBase>(RowName, ContextString);
-	KeyName = (RowData->GetInputTypeInfo(ECommonInputType::MouseAndKeyboard, "Generic").bActionRequiresHold || RowData->GetInputTypeInfo(ECommonInputType::Gamepad, "Generic").bActionRequiresHold) ? RowData->HoldDisplayName : RowData->DisplayName;
-	FoundKeyKeyboard = RowData->GetInputTypeInfo(ECommonInputType::MouseAndKeyboard, "Generic").GetKey();
-	FoundKeyGamepad = RowData->GetInputTypeInfo(ECommonInputType::Gamepad, "Generic").GetKey();
+	const FString ContextString = TEXT("");
+	if(const UDataTable* InputDataTable = InputData.DataTable.Get())
+	{
+		const FName RowName = InputData.RowName;
+		if (const auto RowData = InputDataTable->template FindRow<FCommonInputActionDataBase>(RowName, ContextString))
+		{
+			KeyName = (RowData->GetInputTypeInfo(ECommonInputType::MouseAndKeyboard, "Generic").bActionRequiresHold || RowData->GetInputTypeInfo(ECommonInputType::Gamepad, "Generic").bActionRequiresHold) ? RowData->HoldDisplayName : RowData->DisplayName;
+			FoundKeyKeyboard = RowData->GetInputTypeInfo(ECommonInputType::MouseAndKeyboard, "Generic").GetKey();
+			FoundKeyGamepad = RowData->GetInputTypeInfo(ECommonInputType::Gamepad, "Generic").GetKey();
+		}
+	}
 }
 
 void UBDC_UI_FunctionLibrary::GetEnhancedKeys(UInputMappingContext* OfContext, UInputAction* OfAction, TArray<FKey>& FoundKeys, TArray<FText>& InputNames)
 {
-	TArray<FText> Names;
-	TArray<FKey> Keys;
-	TArray<FEnhancedActionKeyMapping> Contextmappings = OfContext->GetMappings();
-	for (auto CurrentMapping : Contextmappings) {
+	TArray<FEnhancedActionKeyMapping> ContextMappings = OfContext->GetMappings();
+	for (auto& CurrentMapping : ContextMappings) {
 		if (CurrentMapping.Action == OfAction) {
-			Keys.Add(CurrentMapping.Key);
-			Names.Add(FText::FromName(CurrentMapping.GetMappingName()));
+			FoundKeys.Add(CurrentMapping.Key);
+			InputNames.Add(FText::FromName(CurrentMapping.GetMappingName()));
 		}
 	}
-	FoundKeys = Keys;
-	InputNames = Names;
 }
 
 void UBDC_UI_FunctionLibrary::GetKeyDataOfInput(const ECommonInputType InputType, const FDataTableRowHandle InputData, const FKey InputKey, bool& bHasHoldAction, float& HoldTarget, FKey& TargetedKey, EKeyHitReturn& Returns)
 {
-	const FString ContextString;
+	const FString ContextString = TEXT("");
 	const UDataTable* InputDataTable = InputData.DataTable.Get();
 	const FName RowName = InputData.RowName;
-	const FCommonInputActionDataBase* RowData = InputDataTable->FindRow<FCommonInputActionDataBase>(RowName, ContextString);
+	const auto RowData = InputDataTable->template FindRow<FCommonInputActionDataBase>(RowName, ContextString);
 	TargetedKey = InputKey;
 	if (!RowData)
 	{
@@ -78,10 +84,10 @@ void UBDC_UI_FunctionLibrary::GetKeyDataOfInput(const ECommonInputType InputType
 
 void UBDC_UI_FunctionLibrary::GetEnhancedKeyOfInput(UInputMappingContext* OfContext, UInputAction* OfAction, FKey InputKey, bool& bHasHoldAction, float& HoldTarget, FKey& TargetedKey, EKeyHitReturn& Returns)
 {
-	TargetedKey = TargetedKey;
+	TargetedKey = InputKey;
 
-	TArray<FEnhancedActionKeyMapping> Contextmappings = OfContext->GetMappings();
-	for (auto CurrentMapping : Contextmappings) {
+	TArray<FEnhancedActionKeyMapping> ContextMappings = OfContext->GetMappings();
+	for (auto CurrentMapping : ContextMappings) {
 		if (CurrentMapping.Action == OfAction && CurrentMapping.Key == InputKey) {
 			Returns = EKeyHitReturn::KeyIsHit;
 			return;
@@ -98,7 +104,7 @@ void UBDC_UI_FunctionLibrary::SetupPanelSlot(UPanelSlot* Slot, FPanelSlotSetting
 	ReturnedSlot = Slot;
 
 	FAnchors SlotAnchor;
-	float HMin, HMax, VMin, VMax;
+	float HMin = 0.0f, HMax = 0.0f, VMin = 0.0f, VMax = 0.0f;
 	FMargin SlotMargin;
 	SlotMargin.Left = Settings.OffsetLeft;
 	SlotMargin.Top = Settings.OffsetTop_and_PositionY;
@@ -106,7 +112,6 @@ void UBDC_UI_FunctionLibrary::SetupPanelSlot(UPanelSlot* Slot, FPanelSlotSetting
 	SlotMargin.Bottom = Settings.OffsetBottom;
 	EVerticalAlignment VAlign = EVerticalAlignment::VAlign_Fill;
 	EHorizontalAlignment HAlign = EHorizontalAlignment::HAlign_Fill;
-
 	switch (Settings.HorizontalAlignment)
 	{
 	case EAlignH::AlignHL:
@@ -191,7 +196,7 @@ void UBDC_UI_FunctionLibrary::GetWidgetLookAt(FVector2D Source, FVector2D Target
 	TargetLocation.Y = Target.Y;
 	TargetLocation.Z = 0.0f;
 
-	FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(SourceLocation, TargetLocation);
+	const FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(SourceLocation, TargetLocation);
 
 	Angle = Rotation.Yaw;
 }

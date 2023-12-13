@@ -37,19 +37,19 @@ struct FPanelSlotSetting
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
 	EAlignH HorizontalAlignment = EAlignH::AlignHL;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
 	EAlignV VerticalAlignment = EAlignV::AlignVT;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
 	int OffsetLeft = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
 	int OffsetRight_and_PositionX = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
 	int OffsetTop_and_PositionY = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
 	int OffsetBottom = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
 	FVector2D UIPivot = FVector2D(0.5, 0.5);
 };
 
