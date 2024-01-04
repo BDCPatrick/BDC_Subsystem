@@ -2,56 +2,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "Components/Widget.h"
+#include "BDC_Types.h"
 #include "BDC_UI_Interface.generated.h"
-
-
-UENUM(BlueprintType)
-enum class EHUD_Container : uint8
-{
-	ContainerFree UMETA(DisplayName = "Free"),
-	ContainerHUD UMETA(DisplayName = "HUD"),
-	ContainerPrompt UMETA(DisplayName = "Prompt"),
-	ContainerOverlay UMETA(DisplayName = "Overlay")
-};
-
-UENUM(BlueprintType)
-enum class EAlignH : uint8
-{
-	AlignHL UMETA(DisplayName = "Left"),
-	AlignHC UMETA(DisplayName = "Center"),
-	AlignHR UMETA(DisplayName = "Right"),
-	AlignHS UMETA(DisplayName = "Stretch")
-};
-
-UENUM(BlueprintType)
-enum class EAlignV : uint8
-{
-	AlignVT UMETA(DisplayName = "Top"),
-	AlignVC UMETA(DisplayName = "Center"),
-	AlignVB UMETA(DisplayName = "Bottom"),
-	AlignVS UMETA(DisplayName = "Stretch")
-};
-
-USTRUCT(BlueprintType)
-struct FPanelSlotSetting
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
-	EAlignH HorizontalAlignment = EAlignH::AlignHL;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
-	EAlignV VerticalAlignment = EAlignV::AlignVT;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
-	int OffsetLeft = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
-	int OffsetRight_and_PositionX = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
-	int OffsetTop_and_PositionY = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
-	int OffsetBottom = 0;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="BDC_CommonUI|PanelSlotSetting")
-	FVector2D UIPivot = FVector2D(0.5, 0.5);
-};
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
@@ -133,6 +85,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "BDC_CommonUI|Interface|Widgets")
 	// Call when changing the IsEnabled state.
 	void Widget_EnableStateChanged();
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "BDC_CommonUI|Interface|Widgets")
+	// Call to Set the SelfParent variable of a Widget
+	void Widget_SetParent(UUserWidget* NewParent);
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure=false, Category="BDC_CommonUI|Interface|Widgets")
+	// Used to call a Tooltip Function
+	void Widget_DrawTooltip(FBDC_TooltipSetup TooltipSetup);
 
 	/* The following Function can be overidden in BP to have a general way to get a default focus target.
 	In CommonUI, you always want to override the GetDesiredFocusTarget of a Common Widget for that.*/
@@ -155,7 +113,7 @@ public:
 
 	// Interface to add a Widget to the HUD
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "BDC_CommonUI|Interface|HUD")
-	void HUD_AddWidget(UUserWidget* WidgetToAdd, TSubclassOf<UUserWidget> CreatingWidget, FName WidgetName, EHUD_Container IntoContainer, int32 At_Z_Position, FPanelSlotSetting SlotSettings, UWidget*& AddedWidget, UCanvasPanelSlot*& AddedCanvas);
+	void HUD_AddWidget(UUserWidget* WidgetToAdd, TSubclassOf<UUserWidget> CreatingWidget, FName WidgetName, EHUD_Container IntoContainer, int32 At_Z_Position, FPanelSlotSetting SlotSettings, UWidget*& AddedWidget, UPanelSlot*& AddedCanvas);
 
 	// Interface to Remove a Widget from the HUD, by the given Widget reference
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "BDC_CommonUI|Interface|HUD")
@@ -167,7 +125,7 @@ public:
 
 	// Interface to Init the HUD
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "BDC_CommonUI|Interface|HUD")
-	void HUD_Init();
+	void HUD_Init(int32 TypeOfHUD);
 
 	// Change the LoadingScreen Visibility
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "BDC_CommonUI|Interface|HUD")

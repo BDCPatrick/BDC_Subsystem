@@ -8,7 +8,7 @@
 class UCanvasPanelSlot;
 
 /**
- * A helper class to provide Widget informations to CommonUI Navigation.
+ * A helper class to provide Widget Information to CommonUI Navigation.
  */
 
 UCLASS(DisplayName="BDC_CommonUI")

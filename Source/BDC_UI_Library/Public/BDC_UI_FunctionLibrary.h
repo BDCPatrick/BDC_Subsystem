@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -91,5 +89,9 @@ class BDC_UI_LIBRARY_API UBDC_UI_FunctionLibrary : public UBlueprintFunctionLibr
 
 		// Get a Visibility based on a bool
 		UFUNCTION(BlueprintCallable, BlueprintPure = true, Category = "BDC_CommonUI|Helpers|Widgets")
-			static void GetVisibleOfBool(bool bInput, bool bInverse, bool bFullVisible, ESlateVisibility& Visibility);
+	static void GetVisibleOfBool(bool bInput, bool bInverse, bool bFullVisible, ESlateVisibility& Visibility);
+	
+	// Get Uppercase Characters of a String
+	UFUNCTION(BlueprintCallable, BlueprintPure = true, Category = "BDC_CommonUI|Helpers|Widgets")
+	static FString GetUppers(const FString& OfString);
 };

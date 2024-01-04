@@ -241,3 +241,17 @@ void UBDC_UI_FunctionLibrary::GetVisibleOfBool(bool bInput, bool bInverse, bool 
 	}
 	Visibility = ESlateVisibility::Collapsed;
 }
+
+FString UBDC_UI_FunctionLibrary::GetUppers(const FString& OfString)
+{
+	FString Result;
+	FRegexPattern Pattern(TEXT("[A-Z]"));
+	FRegexMatcher Matcher(Pattern, OfString);
+
+	while (Matcher.FindNext())
+	{
+		Result += Matcher.GetCaptureGroup(0);
+	}
+
+	return Result;
+}
